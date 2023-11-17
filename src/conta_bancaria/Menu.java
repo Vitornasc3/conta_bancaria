@@ -2,6 +2,7 @@ package conta_bancaria;
 
 import java.util.Scanner;
 
+import conta_bancaria.model.Conta;
 import conta_bancaria.util.Cores;
 
 public class Menu {
@@ -11,6 +12,17 @@ public class Menu {
 	public static void main(String[] args) {
 
 		int opcao = 0;
+		
+		/*Criando objetos da classe conta para testes*/
+		
+		Conta c1 = new Conta(1, 123, 1, "Victoria Moraes", 100000.0f);
+		c1.visualizar();
+		System.out.println("Exibir o saldo: " + c1.getSaldo());
+		c1.sacar(200000f);
+		c1.visualizar();
+		c1.depositar(5000f);
+		c1.visualizar();
+		
 		while (true) {
 			System.out.println(theme);
 			System.out.println("_______________________________________________________________");
@@ -34,34 +46,34 @@ public class Menu {
 
 			switch (opcao) {
 			case 1 -> {
-				System.out.println(theme +"                 Opção criar conta selecionada.                ");
+				System.out.println(theme + "                 Opção criar conta selecionada.                ");
 			}
 			case 2 -> {
-				System.out.println(theme +"            Opção listar todas as contas selecionada.          ");
+				System.out.println(theme + "            Opção listar todas as contas selecionada.          ");
 			}
 			case 3 -> {
-				System.out.println(theme +"           Opção buscar conta por número selecionada.          ");
+				System.out.println(theme + "           Opção buscar conta por número selecionada.          ");
 			}
 			case 4 -> {
-				System.out.println(theme +"            Opção atualizar dados da conta selecionada.        ");
+				System.out.println(theme + "            Opção atualizar dados da conta selecionada.        ");
 			}
 			case 5 -> {
-				System.out.println(theme +"                  Opção apagar conta selecionada.              ");
+				System.out.println(theme + "                  Opção apagar conta selecionada.              ");
 			}
 			case 6 -> {
-				System.out.println(theme +"                      Opção sacar seçecionada.                 ");
+				System.out.println(theme + "                      Opção sacar seçecionada.                 ");
 			}
 			case 7 -> {
-				System.out.println(theme +"                    Opção depositar selecionada.               ");
+				System.out.println(theme + "                    Opção depositar selecionada.               ");
 			}
 			case 8 -> {
-				System.out.println(theme +"        Opção transferir valores entre contas selecionada.     ");
+				System.out.println(theme + "        Opção transferir valores entre contas selecionada.     ");
 			}
 			case 9 -> {
-				System.out.println(theme +"                       Programa encerrado.                     ");
+				System.out.println(theme + "                       Programa encerrado.                     ");
 				sobre();
 				System.exit(0);
-				}
+			}
 			default -> {
 				System.out.println(theme + "                       Opção inválida!                         ");
 
@@ -70,7 +82,7 @@ public class Menu {
 			}
 		}
 	}
-	
+
 	public static void sobre() {
 		System.out.println(theme);
 		System.out.println("                                                                        ");
@@ -81,8 +93,7 @@ public class Menu {
 		System.out.println("************************************************************************");
 		System.out.println(Cores.TEXT_RESET);
 	}
-	
+
 	public static String theme = Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND;
 
-	
 }
