@@ -15,13 +15,13 @@ public class Menu {
 		
 		/*Criando objetos da classe conta para testes*/
 		
-		Conta c1 = new Conta(1, 123, 1, "Victoria Moraes", 100000.0f);
+		/*Conta c1 = new Conta(1, 123, 1, "Victoria Moraes", 100000.0f);
 		c1.visualizar();
 		System.out.println("Exibir o saldo: " + c1.getSaldo());
 		c1.sacar(200000f);
 		c1.visualizar();
 		c1.depositar(5000f);
-		c1.visualizar();
+		c1.visualizar();*/
 		
 		while (true) {
 			System.out.println(theme);
