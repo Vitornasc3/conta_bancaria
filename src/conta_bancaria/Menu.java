@@ -2,7 +2,7 @@ package conta_bancaria;
 
 import java.util.Scanner;
 
-import conta_bancaria.model.Conta;
+import conta_bancaria.controller.ContaController;
 import conta_bancaria.model.ContaCorrente;
 import conta_bancaria.model.ContaPoupanca;
 import conta_bancaria.util.Cores;
@@ -13,32 +13,20 @@ public class Menu {
 
 	public static void main(String[] args) {
 
-		int opcao = 0;
-		
-		/*Criando objetos da classe conta para testes*/
-		
-		Conta c1 = new Conta(1, 123, 1, "Victoria Moraes", 100000.0f);
-		c1.visualizar();
-		System.out.println("Exibir o saldo: " + c1.getSaldo());
-		c1.sacar(200000f);
-		c1.visualizar();
-		c1.depositar(5000f);
-		c1.visualizar();
-		
-		Conta c2 = new Conta(2, 123, 1, "Vitor Nascimento", 3000000.0f);
-		c2.visualizar();
-		
-		ContaCorrente cc1 = new ContaCorrente(3, 456, 1, "Felipe", 100000.0f, 2000f);
-		cc1.sacar(102000f);
-		cc1.visualizar();
+		int opcao = 0, agencia, tipo, aniversario;
+		String titular;
+		float saldo, limite, rendimento;
 
-		
-		ContaPoupanca cp1 = new ContaPoupanca(4, 123, 2, "Rafael Queiroz", 5254.37f, 0.6f, 5);
-		cp1.visualizar();
-		cp1.depositar(10000f);
-		cp1.visualizar();
-		
+		ContaController contas = new ContaController();
+
+		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 456, 1, "Felipe", 100000.0f, 2000f);
+		contas.cadastrar(cc1);
+
+		ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 123, 2, "Claudia", 50000f, 0.4f, 5);
+		contas.cadastrar(cp1);
+
 		while (true) {
+			System.out.println("");
 			System.out.println(theme);
 			System.out.println("_______________________________________________________________");
 			System.out.println("|*************************************************************|");
@@ -61,36 +49,70 @@ public class Menu {
 
 			switch (opcao) {
 			case 1 -> {
-				System.out.println(theme + "                 Opção criar conta selecionada.                ");
+				System.out.println(theme2 + "                 Opção criar conta selecionada.                ");
+
+				System.out.println("Digite o número da agência: ");
+				agencia = leia.nextInt();
+				leia.skip("\\R");
+
+				System.out.println("Digita o nome do titular da conta:");
+				titular = leia.nextLine();
+
+				System.out.println("Escolha o tipo da conta:\n 1 - Conta Corrente \n 2 - Conta Poupança ");
+				do {tipo = leia.nextInt();}
+				while (tipo < 1 || tipo > 2);
+
+					System.out.println("Digite o valor do primeiro depósito: ");
+				saldo = leia.nextFloat();
+
+				switch (tipo) {
+
+				case 1 -> {
+					System.out.println("Defina o valor do limite: ");
+					limite = leia.nextFloat();
+					contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
+				}
+				case 2 -> {
+					System.out.println("Digite o aniversário da conta: ");
+					aniversario = leia.nextInt();
+					System.out.println("Digite a taxa de rendimento da conta: ");
+					rendimento = leia.nextFloat();
+					contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, rendimento,
+							aniversario));
+				}
+
+				}
+
 			}
 			case 2 -> {
-				System.out.println(theme + "            Opção listar todas as contas selecionada.          ");
+				System.out.println(theme2 + "            Opção listar todas as contas selecionada.          ");
+				contas.listarTodas();
 			}
 			case 3 -> {
-				System.out.println(theme + "           Opção buscar conta por número selecionada.          ");
+				System.out.println(theme2 + "           Opção buscar conta por número selecionada.          ");
 			}
 			case 4 -> {
-				System.out.println(theme + "            Opção atualizar dados da conta selecionada.        ");
+				System.out.println(theme2 + "            Opção atualizar dados da conta selecionada.        ");
 			}
 			case 5 -> {
-				System.out.println(theme + "                  Opção apagar conta selecionada.              ");
+				System.out.println(theme2 + "                  Opção apagar conta selecionada.              ");
 			}
 			case 6 -> {
-				System.out.println(theme + "                      Opção sacar seçecionada.                 ");
+				System.out.println(theme2 + "                      Opção sacar seçecionada.                 ");
 			}
 			case 7 -> {
-				System.out.println(theme + "                    Opção depositar selecionada.               ");
+				System.out.println(theme2 + "                    Opção depositar selecionada.               ");
 			}
 			case 8 -> {
-				System.out.println(theme + "        Opção transferir valores entre contas selecionada.     ");
+				System.out.println(theme2 + "        Opção transferir valores entre contas selecionada.     ");
 			}
 			case 9 -> {
-				System.out.println(theme + "                       Programa encerrado.                     ");
+				System.out.println(theme2 + "                       Programa encerrado.                     ");
 				sobre();
 				System.exit(0);
 			}
 			default -> {
-				System.out.println(theme + "                       Opção inválida!                         ");
+				System.out.println(Cores.ANSI_BLACK_BACKGROUND + Cores.TEXT_RED_UNDERLINED + "                      ** Opção inválida! **                    " + Cores.TEXT_RESET);
 
 			}
 
@@ -110,5 +132,6 @@ public class Menu {
 	}
 
 	public static String theme = Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND;
+	public static String theme2 = Cores.TEXT_CYAN;
 
 }

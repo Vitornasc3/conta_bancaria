@@ -1,6 +1,6 @@
 package conta_bancaria.model;
 
-public class Conta {
+public abstract class Conta {
 
 	// Definir os atributos da classe
 
@@ -84,8 +84,8 @@ public class Conta {
 		String tipo = "";
 
 		switch (this.tipo) {
-		case 1 -> tipo = "CC";
-		case 2 -> tipo = "CP";
+		case 1 -> tipo = "Conta Corrente";
+		case 2 -> tipo = "Conta Poupança";
 		}
 
 		System.out.println("\n\n***********************************");
