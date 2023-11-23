@@ -13,7 +13,7 @@ public class Menu {
 
 	public static void main(String[] args) {
 
-		int opcao = 0, agencia, tipo, aniversario;
+		int opcao = 0, agencia, numero, tipo, aniversario;
 		String titular;
 		float saldo, limite, rendimento;
 
@@ -132,6 +132,6 @@ public class Menu {
 	}
 
 	public static String theme = Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND;
-	public static String theme2 = Cores.TEXT_CYAN;
+	public static String theme2 = Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND;
 
 }
