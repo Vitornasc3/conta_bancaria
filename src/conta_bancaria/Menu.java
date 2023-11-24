@@ -17,9 +17,9 @@ public class Menu {
 
 	public static void main(String[] args) {
 
-		int opcao = 0, agencia, numero, tipo, aniversario;
+		int opcao = 0, agencia, numero, tipo, aniversario, numeroDestino;
 		String titular;
-		float saldo, limite, rendimento;
+		float saldo, limite, rendimento, valor;
 
 		ContaController contas = new ContaController();
 
@@ -105,7 +105,7 @@ public class Menu {
 			case 3 -> {
 				System.out.println("           Opção buscar conta por número selecionada.          \n");
 
-				System.out.println(" Digite o número da conta que deseja buscar:");
+				System.out.println("Digite o número da conta que deseja buscar:");
 				numero = leia.nextInt();
 				contas.procurarPorNumero(numero);
 
@@ -114,7 +114,7 @@ public class Menu {
 			case 4 -> {
 				System.out.println("            Opção atualizar dados da conta selecionada.        \n");
 
-				System.out.println(" Digite o número da conta que deseja atualizar:");
+				System.out.println("Digite o número da conta que deseja atualizar:");
 				numero = leia.nextInt();
 
 				Optional<Conta> conta = contas.buscarNaColection(numero);
@@ -161,22 +161,54 @@ public class Menu {
 			case 5 -> {
 				System.out.println("                  Opção deletar conta selecionada.              \n");
 
-				System.out.println(" Digite o número da conta que deseja deletar:");
+				System.out.println("Digite o número da conta que deseja deletar:");
 				numero = leia.nextInt();
 				contas.deletar(numero);
 
 				keyPress();
 			}
 			case 6 -> {
-				System.out.println("                      Opção sacar seçecionada.                 \n");
+				System.out.println("                      Opção sacar selecionada.                 \n");
+
+				System.out.println("Digite o número da conta que deseja efetuar o saque:");
+				numero = leia.nextInt();
+
+				System.out.println("Digite o valor do saque:");
+				valor = leia.nextFloat();
+
+				contas.sacar(numero, valor);
+
 				keyPress();
 			}
 			case 7 -> {
 				System.out.println("                    Opção depositar selecionada.               \n");
+
+				System.out.println("Digite o número da conta que deseja realizar o depósito:");
+				numero = leia.nextInt();
+
+				System.out.println("Digite o valor do depósito:");
+				valor = leia.nextFloat();
+
+				contas.depositar(numero, valor);
+
 				keyPress();
 			}
 			case 8 -> {
 				System.out.println("        Opção transferir valores entre contas selecionada.     \n");
+
+				System.out.println("Digita a conta de origem da transferência: ");
+				numero = leia.nextInt();
+
+				System.out.println("Digita a conta de destino da transferência: ");
+				numeroDestino = leia.nextInt();
+				if (numero != numeroDestino) {
+					System.out.println("Digite o valor da transferência: ");
+					valor = leia.nextFloat();
+
+					contas.transferir(numero, numeroDestino, valor);
+				} else
+					System.out.println("Os números da contas são iguais");
+
 				keyPress();
 			}
 			case 9 -> {
