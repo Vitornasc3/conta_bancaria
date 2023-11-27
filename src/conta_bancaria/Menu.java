@@ -23,18 +23,18 @@ public class Menu {
 
 		ContaController contas = new ContaController();
 
-		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 456, 1, "Felipe", 100000.0f, 2000f);
+		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 456, 1, "Felipe Alcântara", 100000.0f, 2000f);
 		contas.cadastrar(cc1);
 
-		ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 123, 2, "Claudia", 50000f, 0.4f, 5);
+		ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 123, 2, "Claudia Fernandes", 50000f, 0.4f, 5);
 		contas.cadastrar(cp1);
 
 		while (true) {
 			System.out.println("");
-			System.out.println(theme);
+			System.out.println(Cores.theme);
 			System.out.println("_______________________________________________________________");
 			System.out.println("|*************************************************************|");
-			System.out.println("|-------------------------- Banco ----------------------------|");
+			System.out.println("|----------------------- Banco Winter ------------------------|");
 			System.out.println("|                                                             |");
 			System.out.println("|                1 - Criar conta                              |");
 			System.out.println("|                2 - Listar todas as contas                   |");
@@ -44,7 +44,8 @@ public class Menu {
 			System.out.println("|                6 - Sacar                                    |");
 			System.out.println("|                7 - Depositar                                |");
 			System.out.println("|                8 - Transferir valores entre contas          |");
-			System.out.println("|                9 - Sair                                     |");
+			System.out.println("|                9 - Buscar por nome                          |");
+			System.out.println("|                0 - Sair                                     |");
 			System.out.println("|                                                             |");
 			System.out.println("|*************************************************************|");
 			System.out.println("|_____________________________________________________________|");
@@ -54,7 +55,6 @@ public class Menu {
 				opcao = leia.nextInt();
 
 			} catch (InputMismatchException e) {
-				// System.out.println("");
 				leia.nextLine();
 				opcao = 0;
 			}
@@ -63,32 +63,39 @@ public class Menu {
 			case 1 -> {
 				System.out.println("                 Opção criar conta selecionada.                \n");
 
-				System.out.println("Digite o número da agência: ");
+				System.out.print("Digite o número da agência: ");
 				agencia = leia.nextInt();
 				leia.skip("\\R");
 
-				System.out.println("Digita o nome do titular da conta:");
+				System.out.print("Digita o nome do titular da conta: ");
 				titular = leia.nextLine();
 
 				System.out.println("Escolha o tipo da conta:\n1 - Conta Corrente \n2 - Conta Poupança ");
 				do {
-					tipo = leia.nextInt();
+					System.out.println("Digite uma opção válida!");
+					try {
+						tipo = leia.nextInt();
+					} catch (InputMismatchException e) {
+						System.out.println("Digite um número inteiro!");
+						tipo = 0;
+						leia.nextLine();
+					}
 				} while (tipo < 1 || tipo > 2);
 
-				System.out.println("Digite o valor do primeiro depósito: ");
+				System.out.print("Digite o valor do primeiro depósito: ");
 				saldo = leia.nextFloat();
 
 				switch (tipo) {
 
 				case 1 -> {
-					System.out.println("Defina o valor do limite: ");
+					System.out.print("Defina o valor do limite: ");
 					limite = leia.nextFloat();
 					contas.cadastrar(new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
 				}
 				case 2 -> {
-					System.out.println("Digite o aniversário da conta: ");
+					System.out.print("Digite o aniversário da conta: ");
 					aniversario = leia.nextInt();
-					System.out.println("Digite a taxa de rendimento da conta: ");
+					System.out.print("Digite a taxa de rendimento da conta: ");
 					rendimento = leia.nextFloat();
 					contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, rendimento,
 							aniversario));
@@ -105,7 +112,7 @@ public class Menu {
 			case 3 -> {
 				System.out.println("           Opção buscar conta por número selecionada.          \n");
 
-				System.out.println("Digite o número da conta que deseja buscar:");
+				System.out.print("Digite o número da conta que deseja buscar: ");
 				numero = leia.nextInt();
 				contas.procurarPorNumero(numero);
 
@@ -114,37 +121,37 @@ public class Menu {
 			case 4 -> {
 				System.out.println("            Opção atualizar dados da conta selecionada.        \n");
 
-				System.out.println("Digite o número da conta que deseja atualizar:");
+				System.out.print("Digite o número da conta que deseja atualizar:");
 				numero = leia.nextInt();
 
 				Optional<Conta> conta = contas.buscarNaColection(numero);
 
 				if (conta.isPresent()) {
 
-					System.out.println("Digite o número da agência: ");
+					System.out.print("Digite o número da agência: ");
 					agencia = leia.nextInt();
 					leia.skip("\\R");
 
-					System.out.println("Digita o nome do titular da conta:");
+					System.out.print("Digita o nome do titular da conta:");
 					titular = leia.nextLine();
 
 					tipo = conta.get().getTipo();
 
-					System.out.println("Digite o valor do saldo atual: ");
+					System.out.print("Digite o valor do saldo atual: ");
 					saldo = leia.nextFloat();
 
 					switch (tipo) {
 
 					case 1 -> {
-						System.out.println("Defina o valor do limite: ");
+						System.out.print("Defina o valor do limite: ");
 						limite = leia.nextFloat();
 						contas.atualizar(new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
 					}
 					case 2 -> {
-						System.out.println("Digite o aniversário da conta: ");
+						System.out.print("Digite o aniversário da conta: ");
 						aniversario = leia.nextInt();
 
-						System.out.println("Digite a taxa de rendimento da conta: ");
+						System.out.print("Digite a taxa de rendimento da conta: ");
 						rendimento = leia.nextFloat();
 
 						contas.atualizar(
@@ -161,19 +168,25 @@ public class Menu {
 			case 5 -> {
 				System.out.println("                  Opção deletar conta selecionada.              \n");
 
-				System.out.println("Digite o número da conta que deseja deletar:");
+				System.out.print("Digite o número da conta que deseja deletar:");
 				numero = leia.nextInt();
-				contas.deletar(numero);
+				System.out.println("Tem certeza que deseja deletar a conta " + numero + " ? S/N");
+				leia.skip("\\R");
+				String confirmacao = leia.nextLine();
+				if (confirmacao.equalsIgnoreCase("s"))
+					contas.deletar(numero);
 
 				keyPress();
 			}
 			case 6 -> {
 				System.out.println("                      Opção sacar selecionada.                 \n");
 
-				System.out.println("Digite o número da conta que deseja efetuar o saque:");
+				System.out.print("Digite o número da conta que deseja efetuar o saque: ");
 				numero = leia.nextInt();
 
-				System.out.println("Digite o valor do saque:");
+				System.out.printf("Saldo Atual: R$%.2f\n", contas.buscarNaColection(numero).get().getSaldo());
+				System.out.print("Digite o valor do saque: ");
+
 				valor = leia.nextFloat();
 
 				contas.sacar(numero, valor);
@@ -183,10 +196,10 @@ public class Menu {
 			case 7 -> {
 				System.out.println("                    Opção depositar selecionada.               \n");
 
-				System.out.println("Digite o número da conta que deseja realizar o depósito:");
+				System.out.print("Digite o número da conta que deseja realizar o depósito: ");
 				numero = leia.nextInt();
 
-				System.out.println("Digite o valor do depósito:");
+				System.out.print("Digite o valor do depósito: ");
 				valor = leia.nextFloat();
 
 				contas.depositar(numero, valor);
@@ -196,13 +209,13 @@ public class Menu {
 			case 8 -> {
 				System.out.println("        Opção transferir valores entre contas selecionada.     \n");
 
-				System.out.println("Digita a conta de origem da transferência: ");
+				System.out.print("Digita a conta de origem da transferência: ");
 				numero = leia.nextInt();
 
-				System.out.println("Digita a conta de destino da transferência: ");
+				System.out.print("Digita a conta de destino da transferência: ");
 				numeroDestino = leia.nextInt();
 				if (numero != numeroDestino) {
-					System.out.println("Digite o valor da transferência: ");
+					System.out.print("Digite o valor da transferência: ");
 					valor = leia.nextFloat();
 
 					contas.transferir(numero, numeroDestino, valor);
@@ -212,13 +225,23 @@ public class Menu {
 				keyPress();
 			}
 			case 9 -> {
+				System.out.println("                       Buscar por nome                     \n");
+				System.out.println("Digite o nome do titular da conta: ");
+				leia.skip("\\R");
+				titular = leia.nextLine();
+				
+				contas.procurarPorNome(titular);
+				
+				keyPress();
+			}
+			case 0 -> {
 				System.out.println("                       Programa encerrado.                     \n");
 				keyPress();
 				sobre();
 				System.exit(0);
 			}
 			default -> {
-				System.out.println(Cores.ANSI_BLACK_BACKGROUND + Cores.TEXT_RED_UNDERLINED
+				System.out.println(Cores.TEXT_RED_BOLD
 						+ "                      ** Opção inválida! **                    " + Cores.TEXT_RESET);
 
 			}
@@ -228,13 +251,27 @@ public class Menu {
 	}
 
 	public static void sobre() {
-		System.out.println(theme);
-		System.out.println("                                                                        ");
-		System.out.println("************************************************************************");
-		System.out.println(" Projeto conta bancária desenvolvido por: Vitor do Nascimento Ferreira  ");
-		System.out.println(" Generation Brasil - generation@generation.org                          ");
-		System.out.println(" GitHub: github.com/Vitornasc3/conta_bancaria                           ");
-		System.out.println("************************************************************************");
+		System.out.println(Cores.theme);
+		System.out.println("                                                                       ");
+		System.out.println("                       ****    Banco Winter   ****                     ");
+		System.out.println("                                                                       ");
+		System.out.println("                                 *  *  *                               ");
+		System.out.println("                              *   * * *   *                            ");
+		System.out.println("                             * *   ***   * *                           ");
+		System.out.println("                            * * *   *   * * *                          ");
+		System.out.println("                          *       * * *       *                        ");
+		System.out.println("                         * * * * *  *  * * * * *                       ");
+		System.out.println("                          *       * * *       *                        ");
+		System.out.println("                            * * *   *   * * *                          ");
+		System.out.println("                             * *   ***   * *                           ");
+		System.out.println("                              *   * * *   *                            ");
+		System.out.println("                                 *  *  *                               ");
+		System.out.println("                                                                       ");
+		System.out.println("***********************************************************************");
+		System.out.println(" Projeto conta bancária desenvolvido por: Vitor do Nascimento Ferreira ");
+		System.out.println(" Generation Brasil - generation@generation.org                         ");
+		System.out.println(" GitHub: github.com/Vitornasc3/conta_bancaria                          ");
+		System.out.println("***********************************************************************");
 		System.out.println(Cores.TEXT_RESET);
 	}
 
@@ -249,7 +286,4 @@ public class Menu {
 			System.out.println("Você pressionou uma tecla inválida!");
 		}
 	}
-
-	public static String theme = Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND;
-
 }

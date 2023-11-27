@@ -2,6 +2,8 @@ package conta_bancaria.util;
 
 public class Cores {
 	
+	public static final String theme = Cores.TEXT_CYAN + Cores.ANSI_BLACK_BACKGROUND;
+	
 	public static final String TEXT_RESET = "\u001B[0m";
 
 	//Text Color
