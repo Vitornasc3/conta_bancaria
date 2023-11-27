@@ -23,11 +23,11 @@ public class Menu {
 
 		ContaController contas = new ContaController();
 
-		ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 456, 1, "Felipe Alcântara", 100000.0f, 2000f);
-		contas.cadastrar(cc1);
+		//ContaCorrente cc1 = new ContaCorrente(contas.gerarNumero(), 456, 1, "Felipe Alcântara", 100000.0f, 2000f);
+		//contas.cadastrar(cc1);
 
-		ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 123, 2, "Claudia Fernandes", 50000f, 0.4f, 5);
-		contas.cadastrar(cp1);
+		//ContaPoupanca cp1 = new ContaPoupanca(contas.gerarNumero(), 123, 2, "Claudia Fernandes", 50000f, 0.4f, 5);
+		//contas.cadastrar(cp1);
 
 		while (true) {
 			System.out.println("");
@@ -72,7 +72,7 @@ public class Menu {
 
 				System.out.println("Escolha o tipo da conta:\n1 - Conta Corrente \n2 - Conta Poupança ");
 				do {
-					System.out.println("Digite uma opção válida!");
+					
 					try {
 						tipo = leia.nextInt();
 					} catch (InputMismatchException e) {
